@@ -17,11 +17,11 @@ public class BlobStorageService : IBlobStorageService
     private readonly BlobServiceClient _blobServiceClient;
 
     public BlobStorageService(IOptions<AzureOptions> azureOptions,
-        ExtensionFileOptions extensionFileOptions)
+        ExtensionFileOptions extensionFileOptions, BlobServiceClient blobServiceClient)
     {
         _azureOptions = azureOptions.Value;
         _extensionFileOptions = extensionFileOptions;
-        _blobServiceClient = new BlobServiceClient(_azureOptions.ConnectionString);
+        _blobServiceClient = blobServiceClient;
     }
 
     public async Task<FileDto> GetBlobImageAsync(ImagePath image)

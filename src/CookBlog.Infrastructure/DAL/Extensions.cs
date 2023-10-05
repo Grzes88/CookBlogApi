@@ -42,7 +42,8 @@ internal static class Extensions
         services.AddHostedService<DatabaseInitializer>();
         services.AddScoped<IUnitOfWork, MSqlUnitOfWork>();
         services.AddScoped<ITagRepository, TagRepository>();
-
+        services.AddScoped(x => new BlobServiceClient(azureOptions.ConnectionString));
+       
         //      services.Decorate<ITagRepository, CacheTagRepository>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
 
