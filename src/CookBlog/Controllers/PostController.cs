@@ -3,8 +3,8 @@ using CookBlog.Api.Application.Commands;
 using CookBlog.Api.Application.DTO;
 using CookBlog.Api.Application.Queries;
 using CookBlog.Application.Commands;
-using CookBlog.Application.DTO;
 using CookBlog.Application.Queries;
+using CookBlog.Core.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -65,7 +65,7 @@ public class PostController : ControllerBase
     {
         await _updatePostImageHandler.HandleAsync(new UpdatePostImage(postId, file));
         return NoContent();
-    }
+    } 
 
     [HttpGet("posts")]
     public async Task<ActionResult<IEnumerable<PostDto>>> GetAll([FromQuery] GetPosts query) 

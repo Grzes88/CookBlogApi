@@ -9,26 +9,27 @@ namespace CookBlog.Application.Commands.Handlers;
 public class UpdatePostImageHandler : ICommandHandler<UpdatePostImage>
 {
     private readonly IPostRepository _postRepository;
-    private readonly IFileService _fileService;
+    private readonly IBlobStorageService _blobStorageService;
 
-    public UpdatePostImageHandler(IPostRepository postRepository, IFileService fileService)
+    public UpdatePostImageHandler(IPostRepository postRepository,
+        IBlobStorageService blobStorageService)
     {
         _postRepository = postRepository;
-        _fileService = fileService;
+        _blobStorageService = blobStorageService;
     }
 
     public async Task HandleAsync(UpdatePostImage command)
     {
         var postId = new PostId(command.PostId);
-
         var post = await _postRepository.GetAsync(postId);
+
         if (post == null)
         {
             throw new NotFoundPostException(postId);
         }
 
-        var imagePath = await _fileService.ChangeImagePathAsync(command.FormFile);
+        var image = await _blobStorageService.UploadBlobImageAsync(command.FormFile);
 
-        post.ChangeImage(imagePath);
+        post.ChangeImage(image);
     }
 }

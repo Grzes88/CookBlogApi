@@ -1,4 +1,5 @@
-﻿using CookBlog.Api.Application.Abstractions;
+﻿using Azure.Storage.Blobs;
+using CookBlog.Api.Application.Abstractions;
 using CookBlog.Api.Core.Repositories;
 using CookBlog.Api.Infrastructure.DAL.Decorators;
 using CookBlog.Api.Infrastructure.DAL.Repositories;
@@ -14,9 +15,14 @@ internal static class Extensions
     private const string OptionsSectionName = "MSql";
     private const string OptionsRedisName = "Redis";
     private const string OptionsExtensionFileName = "ExtensionsFile";
+    private const string OptionsAzureName = "Azure";
 
     public static IServiceCollection AddMSql(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<AzureOptions>(configuration.GetRequiredSection(OptionsAzureName));
+        var azureOptions = configuration.GetOptions<AzureOptions>(OptionsAzureName);
+        services.AddSingleton(azureOptions);
+
         services.Configure<ExtensionFileOptions>(configuration.GetRequiredSection(OptionsExtensionFileName));
         var extensionsFile = configuration.GetOptions<ExtensionFileOptions>(OptionsExtensionFileName);
         services.AddSingleton(extensionsFile);
@@ -37,7 +43,7 @@ internal static class Extensions
         services.AddScoped<IUnitOfWork, MSqlUnitOfWork>();
         services.AddScoped<ITagRepository, TagRepository>();
 
-  //      services.Decorate<ITagRepository, CacheTagRepository>();
+        //      services.Decorate<ITagRepository, CacheTagRepository>();
         services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
 
         return services;
