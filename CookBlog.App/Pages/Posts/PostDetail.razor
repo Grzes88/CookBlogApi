@@ -1,4 +1,4 @@
-﻿@*@page "/postdetail/{PostId}"
+﻿@page "/postdetail/{PostId}"
 
 <div class="container" style="margin-bottom: 500px;">
 
@@ -23,7 +23,7 @@
                         <label type="text" class="form-control-plaintext">@string.Join(", ", PostDto.Tags?.Select(tag => tag.Description))</label>
                     </div>
                 </div>
-
+                
                 <div class="comments  mt-6">
                     @foreach (var comment in PostDto.Comments)
                     {
@@ -49,4 +49,3 @@
         </div>
     </div>
 </div>
-*@

@@ -30,7 +30,7 @@ public static class Extensions
         services
             .AddMSql(configuration)
             .AddSingleton<IClock, Clock>()
-            .AddScoped<IFileService, FileService>();
+            .AddScoped<IBlobStorageService, BlobStorageService>();
 
         services.AddCustomLogging();
         services.AddSecurity();
