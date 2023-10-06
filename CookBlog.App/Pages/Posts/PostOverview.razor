@@ -12,9 +12,8 @@ else
         <div class="d-flex flex-wrap justify-center">
             @foreach (var item in PostDtos)
             {
-                <MudLink href="@($"postdetail/{item.Id}")">
-                    <MudCard width="250px;" Class="ma-2">
-
+                <MudCard width="250px;" Class="ma-2">
+                    <MudLink href="@($"postdetail/{item.Id}")">
                         <MudCardHeader>
                             <CardHeaderContent>
                                 <MudText Typo="Typo.h6" Color="Color.Dark">@item.Title</MudText>
@@ -32,15 +31,15 @@ else
                             <MudText Color="Color.Dark">@item.Category.FullName</MudText>
                             <MudText Color="Color.Dark">@string.Join(", ", item.Tags.Select(x=>x.Description) )</MudText>
                         </MudCardContent>
+                    </MudLink>
 
-                        <MudCardActions>
-                            <MudIconButton Icon="@Icons.Material.Filled.Details" Label="Details" Color="Color.Info" @onclick="@(() => {NavigationManager.NavigateTo($"/postdetail/{item.Id}");})"></MudIconButton>
-                            <MudIconButton Icon="@Icons.Material.Filled.Edit" Label="Edit" Color="Color.Tertiary" @onclick="@(() => {NavigationManager.NavigateTo($"/postedit/{item.Id}");})"></MudIconButton>
-                            <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" Color="Color.Error" @onclick="@(() => {DeletePostAsync(item.Id);})"></MudIcon>
-                        </MudCardActions>
+                    <MudCardActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Details" Label="Details" Color="Color.Info" @onclick="@(() => {NavigationManager.NavigateTo($"/postdetail/{item.Id}");})"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Label="Edit" Color="Color.Tertiary" @onclick="@(() => {NavigationManager.NavigateTo($"/postedit/{item.Id}");})"></MudIconButton>
+                        <MudIcon Icon="@Icons.Material.Filled.Delete" Title="Delete" Color="Color.Error" @onclick="@(() => {DeletePostAsync(item.Id);})"></MudIcon>
+                    </MudCardActions>
 
-                    </MudCard>
-                </MudLink>
+                </MudCard>
             }
         </div>
     </MudContainer>
